@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <unordered_map>
 using namespace std;
 
 class Variety {
@@ -139,17 +139,45 @@ public:
     void giveFeedback();
 };
 
+// Additional class for handling cart items
+class CartItem {
+public:
+    Variety variety;
+    Brand brand;
+    Item item;
+    Product product;
+    int quantity;
+
+    CartItem(Variety v, Brand b, Item i, Product p, int qty)
+        : variety(v), brand(b), item(i), product(p), quantity(qty) {}
+};
+
 // Initialize static member
 vector<User> User::Users;
 class ShoppingManagementSystem : public Product, public User {
 private:
-    const string name = "EasyBuy";
-    float rating = 4.7;
+    const string platformName = "EasyBuy";
+    float platformRating = 4.7;
+    vector<CartItem> cart;
+    unordered_map<int, vector<CartItem>> purchaseHistory; // Stores purchase history per customer ID
+
 public:
-    ShoppingManagementSystem(){
-        cout<<"Welcome to "<<name<<" Online Shopping Management System\n";
-        cout<<"Rating of our platform :- "<<rating<<endl;
+    ShoppingManagementSystem() {
+        cout << "Welcome to " << platformName << " Online Shopping Management System\n";
+        cout << "Rating of our platform: " << platformRating << endl;
     }
-    void displayProducts();
+
+    void run(); // Main program loop
+    void displayMainMenu();
+    void login();
+    void signup();
     void displayUsers();
+    void browseProducts();
+    void viewFeedback();
+    void displayProducts();
+    void handleProductSelection();
+    void generateBill(User &currentUser);
+    void showPurchaseHistory(int customerID);
+    void addToCart(Variety &variety, Brand &brand, Item &item, Product &product, int qty);
+    void collectFeedback(User &currentUser);
 };
