@@ -6,7 +6,6 @@ using namespace std;
 
 class Variety {
 private:
-    string name;
     int varietyID;
     int price;
     int quantity;
@@ -15,6 +14,7 @@ private:
     static vector<int> StoredID;
 
 public:
+    string name;
     Variety(){
 
     };
@@ -32,13 +32,13 @@ vector<int> Variety::StoredID;
 
 class Brand : public Variety {
 private:
-    string name;
     float rating;
     int brandID;
     vector<Variety> varieties;
     static vector<int> StoredID_B;
 
 public:
+    string name;
     Brand(){
 
     }
@@ -58,12 +58,12 @@ vector<int> Brand::StoredID_B;
 
 class Item : public Brand {
 private:
-    string name;
     int itemID;
     vector<Brand> Brands;
     static vector<int> StoredID_I;
 
 public:
+    string name;
     Item(){
 
     }
@@ -83,12 +83,12 @@ vector<int> Item::StoredID_I;
 
 class Product : public Item {
 protected:
-    string name;
     int productID;
     vector<Item> items;
     static vector<int> StoredID_P;
     static vector<Product>prod;
 public:
+    string name;
     Product(){
 
     }
@@ -114,11 +114,11 @@ protected:
     string name;
     long long mobileNumber;
     string address;
-    int customerID;
     static vector<User>Users;
     string emailAddress;
-    string feedback;
 public:
+    int customerID;
+    string feedback;
     User(){
 
     }
@@ -156,14 +156,14 @@ public:
 vector<User> User::Users;
 class ShoppingManagementSystem : public Product, public User {
 private:
-    const string platformName = "EasyBuy";
+    const string name = "EasyBuy";
     float platformRating = 4.7;
     vector<CartItem> cart;
     unordered_map<int, vector<CartItem>> purchaseHistory; // Stores purchase history per customer ID
 
 public:
     ShoppingManagementSystem() {
-        cout << "Welcome to " << platformName << " Online Shopping Management System\n";
+        cout << "Welcome to " << name << " Online Shopping Management System\n";
         cout << "Rating of our platform: " << platformRating << endl;
     }
 
