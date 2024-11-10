@@ -96,9 +96,10 @@ void User::displayUserInfo()
 
 User User::takeUserInfo()
 {
-    string Name;
+    string NameUser;
     cout << "Please enter your name: ";
-    getline(cin, Name);
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+    getline(cin, NameUser);
 
     long long MobileNumber;
     cout << "Please enter your mobile number: ";
@@ -112,7 +113,7 @@ User User::takeUserInfo()
     string EmailAddress;
     cout << "Please enter your email address: ";
     getline(cin, EmailAddress);
-    return User(Name, MobileNumber, Address, EmailAddress,"Null");
+    return User(NameUser, MobileNumber, Address, EmailAddress,"Null");
 }
 
 void User::displayUserInfoForOSMSystem()
@@ -217,7 +218,7 @@ void ShoppingManagementSystem::login() {
 }
 
 void ShoppingManagementSystem::signup() {
-    User newUser = User::takeUserInfo();
+    User newUser = newUser.takeUserInfo();
     newUser.customerID = User::Users.size(); // Set the customerID as the size of Users array
     cout << "Signup successful. Your customer ID is: " << newUser.customerID << endl;
     browseProducts();
@@ -232,9 +233,64 @@ void ShoppingManagementSystem::handleProductSelection() {
     int productID;
     cout << "Enter Product ID to view items (or 0 to go back): ";
     cin >> productID;
+    
+    if (productID == 0) return; // Go back to previous menu
+    if (productID < 1 || productID > prod.size()) {
+        cout << "Invalid Product ID. Returning to menu.\n";
+        return;
+    }
+    
+    Product &selectedProduct = prod[productID - 1];
+    selectedProduct.displayProductItems();
 
-    // Implement item selection, brand selection, variety selection, quantity selection, and add-to-cart functionality here
-    // Use similar logic to navigate within each level
+    int itemID;
+    cout << "Enter Item ID to view brands (or 0 to go back): ";
+    cin >> itemID;
+
+    if (itemID == 0) return;
+    if (itemID < 1 || itemID > selectedProduct.items.size()) {
+        cout << "Invalid Item ID. Returning to menu.\n";
+        return;
+    }
+
+    Item &selectedItem = selectedProduct.items[itemID - 1];
+    selectedItem.displayItemBrands();
+
+    int brandID;
+    cout << "Enter Brand ID to view varieties (or 0 to go back): ";
+    cin >> brandID;
+
+    if (brandID == 0) return;
+    if (brandID < 1 || brandID > selectedItem.Brands.size()) {
+        cout << "Invalid Brand ID. Returning to menu.\n";
+        return;
+    }
+
+    Brand &selectedBrand = selectedItem.Brands[brandID - 1];
+    selectedBrand.displayBrandVarieties();
+
+    int varietyID;
+    cout << "Enter Variety ID to view details (or 0 to go back): ";
+    cin >> varietyID;
+
+    if (varietyID == 0) return;
+    if (varietyID < 1 || varietyID > selectedBrand.varieties.size()) {
+        cout << "Invalid Variety ID. Returning to menu.\n";
+        return;
+    }
+
+    Variety &selectedVariety = selectedBrand.varieties[varietyID - 1];
+    selectedVariety.displayVarietyInfo();
+
+    int quantity;
+    cout << "Enter quantity to add to cart (or 0 to cancel): ";
+    cin >> quantity;
+
+    if (quantity > 0) {
+        addToCart(selectedVariety, selectedBrand, selectedItem, selectedProduct, quantity);
+    } else {
+        cout << "Cancelled adding to cart.\n";
+    }
 }
 
 // Display purchase history for a user

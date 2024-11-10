@@ -34,11 +34,11 @@ class Brand : public Variety {
 private:
     float rating;
     int brandID;
-    vector<Variety> varieties;
     static vector<int> StoredID_B;
 
 public:
     string name;
+    vector<Variety> varieties;
     Brand(){
 
     }
@@ -59,11 +59,11 @@ vector<int> Brand::StoredID_B;
 class Item : public Brand {
 private:
     int itemID;
-    vector<Brand> Brands;
     static vector<int> StoredID_I;
 
 public:
     string name;
+    vector<Brand> Brands;
     Item(){
 
     }
@@ -84,11 +84,11 @@ vector<int> Item::StoredID_I;
 class Product : public Item {
 protected:
     int productID;
-    vector<Item> items;
     static vector<int> StoredID_P;
     static vector<Product>prod;
 public:
     string name;
+    vector<Item> items;
     Product(){
 
     }
@@ -108,7 +108,6 @@ public:
 vector<int> Product::StoredID_P;
 // Initialize static member
 vector<Product> Product::prod;
-
 class User{
 protected:
     string name;

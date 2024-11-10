@@ -1,7 +1,6 @@
 #include "FunctionsOfOSMS.cpp"
 // Main function for testing
 int main() {
-    ShoppingManagementSystem sms;
     // Creating initial instances
     Variety V1("BAJRA", 1, 200, 2,4.2, "5kg Mfg Date:- 05/10/2024 .Expiry Date:- Best before 3 months.");
     Variety V2("MAKKA",2,200,3,4.5,"5Kg. Mfg Date:- 09/11/2024 .Expiry Date:- Best before 2 months from mfg date\n");
@@ -79,7 +78,7 @@ int main() {
     // I1.displayItemBrands();
     // B1.displayBrandVarieties();
     // V1.displayVarietyInfo();
-
+    ShoppingManagementSystem sms;
     sms.run();
     return 0;
 }
