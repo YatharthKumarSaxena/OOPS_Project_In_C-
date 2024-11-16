@@ -81,6 +81,10 @@ int main()
     // B1.displayBrandVarieties();
     // V1.displayVarietyInfo();
     ShoppingManagementSystem sms;
+            
+    sms.front_page();
+    
     sms.run();
+    
     return 0;
 }
