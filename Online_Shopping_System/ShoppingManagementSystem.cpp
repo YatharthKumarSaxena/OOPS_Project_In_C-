@@ -99,7 +99,7 @@ public:
         prod.push_back((*this));
     }
 
-    void addItemInExisProduct(Item& i);
+    void addItemInExisProduct(Item &i);
     void displayProductItems();
     void displayProductInfo();
 };

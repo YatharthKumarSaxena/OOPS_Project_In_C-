@@ -30,7 +30,7 @@ void Brand::displayBrandVarieties()
     cout << "Total number of varieties available in " << name << ": " << varieties.size() << endl;
     for (int i = 0; i < varieties.size(); ++i)
     {
-        cout << i + 1 << "th Variety details:\n";
+        cout << i + 1 << "the Variety details:\n";
         varieties[i].displayVarietyInfoForBrand();
     }
 }
@@ -66,6 +66,8 @@ void Item::addBrandInExisItem(Brand &B)
 void Product::addItemInExisProduct(Item &i)
 {
     items.push_back(i);
+    prod[productID-1]=(*this);
+
 }
 
 void Product::displayProductItems()
@@ -73,7 +75,7 @@ void Product::displayProductItems()
     cout << "Total number of items available in " << name << ": " << items.size() << endl;
     for (int i = 0; i < items.size(); ++i)
     {
-        cout << i + 1 << "th item details:\n";
+        cout << i + 1 << "the item details:\n";
         items[i].displayItemsForProduct();
     }
 }
@@ -137,7 +139,7 @@ void ShoppingManagementSystem::displayProducts()
     cout << "Total number of products available in " << name << ": " << prod.size() << endl;
     for (int i = 0; i < prod.size(); ++i)
     {
-        cout << i + 1 << "th product details:\n";
+        cout << i + 1 << "the product details:\n";
         prod[i].displayProductInfo();
         cout << endl;
     }
@@ -240,7 +242,7 @@ void ShoppingManagementSystem::handleProductSelection() {
         return;
     }
     
-    Product &selectedProduct = prod[productID - 1];
+    Product selectedProduct = prod[productID - 1];
     selectedProduct.displayProductItems();
 
     int itemID;
@@ -253,7 +255,7 @@ void ShoppingManagementSystem::handleProductSelection() {
         return;
     }
 
-    Item &selectedItem = selectedProduct.items[itemID - 1];
+    Item selectedItem = selectedProduct.items[itemID - 1];
     selectedItem.displayItemBrands();
 
     int brandID;
