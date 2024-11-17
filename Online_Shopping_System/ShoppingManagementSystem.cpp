@@ -7,14 +7,14 @@ using namespace std;
 class Variety {
 private:
     int varietyID;
-    int price;
-    int quantity;
     string description;
     float rating;
     static vector<int> StoredID;
 
 public:
     string name;
+    int price;
+    int quantity;
     Variety(){
 
     };
@@ -99,7 +99,7 @@ public:
         prod.push_back((*this));
     }
 
-    void addItemInExisProduct(Item& i);
+    void addItemInExisProduct(Item &i);
     void displayProductItems();
     void displayProductInfo();
 };
@@ -145,10 +145,18 @@ public:
     Brand brand;
     Item item;
     Product product;
+    double total_price;
     int quantity;
 
     CartItem(Variety v, Brand b, Item i, Product p, int qty)
-        : variety(v), brand(b), item(i), product(p), quantity(qty) {}
+        : variety(v), brand(b), item(i), product(p), quantity(qty) {
+            total_price=v.price*qty;
+        }
+
+    void display_cartitem(){
+        cout<<"Brand: "<<brand.name<<"\nName"<<variety.name<<"\nPrice: "<<variety.price<<"\nQuantity: "<<quantity<<
+        "\nTotal Price: "<<total_price<<endl;
+    }
 };
 
 // Initialize static member
@@ -158,9 +166,9 @@ private:
     const string name = "EasyBuy";
     float platformRating = 4.7;
     vector<CartItem> cart;
-    unordered_map<int, vector<CartItem>> purchaseHistory; // Stores purchase history per customer ID
 
 public:
+    int login_userID;
     ShoppingManagementSystem() {
         cout << "Welcome to " << name << " Online Shopping Management System\n";
         cout << "Rating of our platform: " << platformRating << endl;
@@ -168,15 +176,18 @@ public:
 
     void run(); // Main program loop
     void displayMainMenu();
+    void front_page();
     void login();
     void signup();
-    void displayUsers();
+    void displayUsersfeedback();
     void browseProducts();
-    void viewFeedback();
     void displayProducts();
     void handleProductSelection();
-    void generateBill(User &currentUser);
-    void showPurchaseHistory(int customerID);
+    void generateBill();
     void addToCart(Variety &variety, Brand &brand, Item &item, Product &product, int qty);
-    void collectFeedback(User &currentUser);
+    void show_cart();
+    void cart_functionalities();
+    void delete_cart();
+    void remove_product();
+    
 };

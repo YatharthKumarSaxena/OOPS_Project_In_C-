@@ -30,7 +30,7 @@ void Brand::displayBrandVarieties()
     cout << "Total number of varieties available in " << name << ": " << varieties.size() << endl;
     for (int i = 0; i < varieties.size(); ++i)
     {
-        cout << i + 1 << "th Variety details:\n";
+        cout << i + 1 << "the Variety details:\n";
         varieties[i].displayVarietyInfoForBrand();
     }
 }
@@ -66,6 +66,8 @@ void Item::addBrandInExisItem(Brand &B)
 void Product::addItemInExisProduct(Item &i)
 {
     items.push_back(i);
+    prod[productID-1]=(*this);
+
 }
 
 void Product::displayProductItems()
@@ -73,7 +75,7 @@ void Product::displayProductItems()
     cout << "Total number of items available in " << name << ": " << items.size() << endl;
     for (int i = 0; i < items.size(); ++i)
     {
-        cout << i + 1 << "th item details:\n";
+        cout << i + 1 << "the item details:\n";
         items[i].displayItemsForProduct();
     }
 }
@@ -137,20 +139,46 @@ void ShoppingManagementSystem::displayProducts()
     cout << "Total number of products available in " << name << ": " << prod.size() << endl;
     for (int i = 0; i < prod.size(); ++i)
     {
-        cout << i + 1 << "th product details:\n";
+        cout << i + 1 << "the product details:\n";
         prod[i].displayProductInfo();
         cout << endl;
     }
 }
 
-void ShoppingManagementSystem::displayUsers()
+void ShoppingManagementSystem::displayUsersfeedback()
 {
     cout << "Total number of users available in " << name << ": " << Users.size() << endl;
     for (int i = 0; i < Users.size(); ++i)
     {
-        cout << i + 1 << "th user details:\n";
+        cout << i + 1 << "the user details:\n";
         Users[i].displayUserInfoForOSMSystem();
         cout << endl;
+    }
+}
+
+//front page to choose what type of user is
+void ShoppingManagementSystem::front_page(){
+    cout<<endl;
+            cout<<"Login Page:-"<<endl;
+            cout<<"1. Login"<<endl;
+            cout<<"2. SignUp"<<endl;
+            cout<<"Choose any one option to start with "<<name<<":"<<endl;
+            int choice;
+            cin>>choice;
+
+
+    switch(choice)
+    {
+        case 1:
+                login();
+                break;
+        case 2:
+                signup();
+              break;
+        default :
+                cout<<"INVALID INPUT.OPEN THE PROGRAM AGAIN."<<endl;
+                exit(0);
+
     }
 }
 
@@ -163,29 +191,33 @@ void ShoppingManagementSystem::run() {
 
 void ShoppingManagementSystem::displayMainMenu() {
     int choice;
-    cout << "\nMain Menu:\n";
-    cout << "1. Login\n";
-    cout << "2. Sign up\n";
-    cout << "3. View Products\n";
-    cout << "4. View User Feedback\n";
-    cout << "5. Quit\n";
+    cout << "\n--------------------Main Menu:--------------------\n";
+    cout << "1. View Products\n";
+    cout<< "2. View Cart\n";
+    cout << "3. View User Feedback\n";
+    cout << "4. Quit\n";
     cout << "Enter your choice: ";
     cin >> choice;
 
     switch (choice) {
+        
         case 1:
-            login();
-            break;
-        case 2:
-            signup();
-            break;
-        case 3:
             browseProducts();
             break;
-        case 4:
-            displayUsers();
+        case 2:
+            show_cart();
             break;
-        case 5:
+             
+        case 3:
+            displayUsersfeedback();
+            break;
+        case 4:
+        if (Users[login_userID - 1].feedback.empty()){
+                cout<<endl;
+                Users[login_userID-1].giveFeedback();
+            }
+            cout<<endl;
+            cout<<"GOOD TIME WITH YOU.SEE YOU SOON!"<<endl;
             exit(0);
         default:
             cout << "Invalid choice, please try again.\n";
@@ -193,20 +225,14 @@ void ShoppingManagementSystem::displayMainMenu() {
 }
 
 void ShoppingManagementSystem::login() {
-    int customerID, attempts = 0;
+    int  attempts = 0;
     while (attempts < 3) {
         cout << "Enter your customer ID: ";
-        cin >> customerID;
-        // Validate customer ID
-        if (customerID > 0 && customerID <= Users.size()) {
+        cin >> login_userID;
+        // Validate login_userID
+        if (login_userID > 0 && login_userID <= Users.size()) {
             cout << "Login successful.\n";
-            int choice;
-            cout << "1. View Purchase History\n";
-            cout << "2. Make a Purchase\n";
-            cout << "Enter your choice: ";
-            cin >> choice;
-            if (choice == 1) showPurchaseHistory(customerID);
-            else browseProducts();
+            Users[login_userID-1].displayUserInfo();
             return;
         } else {
             cout << "Invalid customer ID. Try again.\n";
@@ -221,7 +247,7 @@ void ShoppingManagementSystem::signup() {
     User newUser = newUser.takeUserInfo();
     newUser.customerID = User::Users.size(); // Set the customerID as the size of Users array
     cout << "Signup successful. Your customer ID is: " << newUser.customerID << endl;
-    browseProducts();
+    login_userID=newUser.customerID;
 }
 
 void ShoppingManagementSystem::browseProducts() {
@@ -240,7 +266,7 @@ void ShoppingManagementSystem::handleProductSelection() {
         return;
     }
     
-    Product &selectedProduct = prod[productID - 1];
+    Product selectedProduct = prod[productID - 1];
     selectedProduct.displayProductItems();
 
     int itemID;
@@ -253,7 +279,7 @@ void ShoppingManagementSystem::handleProductSelection() {
         return;
     }
 
-    Item &selectedItem = selectedProduct.items[itemID - 1];
+    Item selectedItem = selectedProduct.items[itemID - 1];
     selectedItem.displayItemBrands();
 
     int brandID;
@@ -282,32 +308,22 @@ void ShoppingManagementSystem::handleProductSelection() {
     Variety &selectedVariety = selectedBrand.varieties[varietyID - 1];
     selectedVariety.displayVarietyInfo();
 
-    int quantity;
+    int user_quantity;
     cout << "Enter quantity to add to cart (or 0 to cancel): ";
-    cin >> quantity;
+    cin >> user_quantity;
 
-    if (quantity > 0) {
-        addToCart(selectedVariety, selectedBrand, selectedItem, selectedProduct, quantity);
-    } else {
+    if (user_quantity > 0 && user_quantity<=selectedVariety.quantity ) {
+        addToCart(selectedVariety, selectedBrand, selectedItem, selectedProduct,user_quantity);
+        selectedVariety.quantity=selectedVariety.quantity-user_quantity;
+    } 
+    else if(user_quantity > selectedVariety.quantity){
+        cout<<"Order cancel due to out of stock of quantity."<<endl;
+    }
+    else {
         cout << "Cancelled adding to cart.\n";
     }
 }
 
-// Display purchase history for a user
-void ShoppingManagementSystem::showPurchaseHistory(int customerID) {
-    if (purchaseHistory.find(customerID) != purchaseHistory.end()) {
-        cout << "Purchase History for Customer ID: " << customerID << endl;
-        for (const auto& item : purchaseHistory[customerID]) {
-            cout << "Product: " << item.product.name 
-                 << ", Item: " << item.item.name 
-                 << ", Brand: " << item.brand.name 
-                 << ", Variety: " << item.variety.name 
-                 << ", Quantity: " << item.quantity << endl;
-        }
-    } else {
-        cout << "No purchase history found for Customer ID: " << customerID << endl;
-    }
-}
 
 // Add a selected item to the cart
 void ShoppingManagementSystem::addToCart(Variety &variety, Brand &brand, Item &item, Product &product, int qty) {
@@ -316,20 +332,78 @@ void ShoppingManagementSystem::addToCart(Variety &variety, Brand &brand, Item &i
     cout << "Added to cart: " << variety.name << " x" << qty << endl;
 }
 
-// Collect user feedback
-void ShoppingManagementSystem::collectFeedback(User &currentUser) {
-    string feedback;
-    cout << "Please enter your feedback: ";
-    cin.ignore();
-    getline(cin, feedback);
-    currentUser.feedback = feedback;
-    cout << "Thank you for your feedback!\n";
-}
 
-// View feedback from users
-void ShoppingManagementSystem::viewFeedback() {
-    cout << "User Feedback:\n";
-    for (const auto &user : User::Users) {
-        cout << "Customer ID: " << user.customerID << ", Feedback: " << user.feedback << endl;
+ void ShoppingManagementSystem::generateBill(){
+        double bill = 0;
+        for(int i=0;i<cart.size();i++){
+            bill = bill+cart[i].total_price;
+        }
+        cout<<"-----------------BILL-----------------"<<endl;
+        cout<<"\nTotal money to be pay:-"<<bill<<endl;
+        cout<<endl;
+        cout<<"Enter 1 to pay:-";
+        int input;
+        cin>>input;
+        if(input!=1){
+            cout<<"INVALID INPUT.NO TRANSACTION TAKES PLACE."<<endl;
+        }
+        else{
+            cout<<"YOUR ORDER IS PLACED.SOON YOU GET IT."<<endl;
+        }
+        
+ }
+
+ void ShoppingManagementSystem::show_cart(){
+    if(cart.empty()){
+        cout<<"CART IS EMPTY."<<endl;
     }
+    else{
+        for(int i =0;i<cart.size();i++){
+        cout<<"Product "<<i+1<<"."<<endl;
+        cart[i].display_cartitem();
+        cout<<endl;
+        }
+    cart_functionalities();   
+    }
+ }
+
+ void ShoppingManagementSystem::cart_functionalities(){
+        cout<<"Cart functionalities:-"<<endl;
+            cout<<"1.Make Payment"<<endl;
+             cout<<"2.Add more Products"<<endl;
+             cout<<"3.Remove Products"<<endl;
+             int choice;
+             cout<<"Choose any of the above function:-";
+             cin>>choice;
+             switch(choice){
+                case 1:
+                        generateBill();
+                        cout<<endl;
+                        Users[login_userID-1].giveFeedback();
+                        cout<<endl;
+                        delete_cart();
+                        break;
+                case 2:
+                        break;
+                case 3:
+                        remove_product();
+                        break;
+                default :
+                        cout<<"INVALID CHOICE."<<endl;
+                        break;
+    }
+ }
+
+void ShoppingManagementSystem::delete_cart(){
+    cart.clear();
+    
+} 
+
+void ShoppingManagementSystem::remove_product(){
+         cout<<"Enter product number to be remove from the cart:-";
+            int number;
+            cin>>number;
+            auto pos = cart.begin() + (number-1);
+            cart.erase(pos);
+            cout<<"PRODUCT REMOVED SUCCESSFULLY."<<endl;
 }
