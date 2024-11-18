@@ -103,7 +103,7 @@ class User
 {
 protected:
     string name;
-    long long mobileNumber;
+    string mobileNumber;
     string address;
     static vector<User> Users;
     string emailAddress;
@@ -114,14 +114,14 @@ public:
     User()
     {
     }
-    User(string name, long long mobileNumber, string address, string emailAddress)
+    User(string name, string mobileNumber, string address, string emailAddress)
         : name(name), mobileNumber(mobileNumber), address(address), emailAddress(emailAddress)
     {
         customerID = Users.size() + 1; // Explicitly set customerID based on the Users size
         Users.push_back(*this);
     }
 
-    User(string name, long long mobileNumber, string address, string emailAddress, string feedback)
+    User(string name, string mobileNumber, string address, string emailAddress, string feedback)
         : name(name), mobileNumber(mobileNumber), address(address), emailAddress(emailAddress), feedback(feedback)
     {
         customerID = Users.size() + 1; // Explicitly set customerID based on the Users size
@@ -133,7 +133,8 @@ public:
     void giveFeedback();
 };
 
-// Additional class for handling cart items
+// Additional class for handling cart items 
+
 class CartItem
 {
 public:
@@ -168,9 +169,9 @@ private:
 public:
     int login_userID;
     ShoppingManagementSystem()
-    {
-        cout << "\n\nWelcome to " << name << " Online Shopping Management System\n";
-        cout << "Rating of our platform: " << platformRating << endl;
+    {   
+        cout << "\n                ---------------Welcome to " << name << " Online Shopping Management System---------------\n";
+        cout << "                                 ----------Rating of our platform: " << platformRating <<"-----------"<< endl;
     }
 
     void run(); // Main program loop

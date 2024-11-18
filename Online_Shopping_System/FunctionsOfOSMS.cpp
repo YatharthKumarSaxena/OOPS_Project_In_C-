@@ -4,7 +4,8 @@
 // Member Functions of Variety
 void Variety::displayVarietyInfo()
 {
-    cout << "\n\nName: " << name << "    ";
+    cout<<"\n-------------------- VARIETY DETAILS --------------------"<<endl;
+    cout << "\nName: " << name << "    ";
     cout << "VarietyID: " << varietyID << "\t";
     cout << "Variety Price in Rupees: " << price << "\t";
     cout << "Avaiable quantity for " << name << " is " << quantity << "\n";
@@ -30,11 +31,12 @@ void Brand::displayBrandInfoForItem()
 
 void Brand::displayBrandVarieties()
 {
-    cout << "\n\nTotal number of varieties available in " << name << ": " << varieties.size() << endl
+    cout<<"\n-------------------- AVAILABLE VARIETIES --------------------"<<endl;
+    cout << "\nTotal number of varieties available in " << name << ": " << varieties.size() << endl
          << endl;
     for (int i = 0; i < varieties.size(); ++i)
     {
-        cout << i + 1 << "the Variety details:\n";
+        cout << i + 1 << "th Variety details:\n";
         varieties[i].displayVarietyInfoForBrand();
         cout << endl;
     }
@@ -49,7 +51,8 @@ void Brand::addVarietyInExisBrand(Variety &V)
 // Member functions of Item
 void Item::displayItemBrands()
 {
-    cout << "\n\nTotal number of brands available in " << name << ": " << Brands.size() << endl
+    cout<<"\n-------------------- AVAILABLE BRANDS --------------------"<<endl;
+    cout << "\nTotal number of brands available in " << name << ": " << Brands.size() << endl
          << endl;
     for (int i = 0; i < Brands.size(); ++i)
     {
@@ -80,7 +83,8 @@ void Product::addItemInExisProduct(Item &i)
 
 void Product::displayProductItems()
 {
-    cout << "\n\nTotal number of items available in " << name << ": " << items.size() << endl
+    cout<<"\n-------------------- AVAILABLE ITEMS --------------------"<<endl;
+    cout << "\nTotal number of items available in " << name << ": " << items.size() << endl
          << endl;
     for (int i = 0; i < items.size(); ++i)
     {
@@ -114,9 +118,16 @@ User User::takeUserInfo()
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     getline(cin, NameUser);
 
-    long long MobileNumber;
-    cout << "Please enter your mobile number: ";
-    cin >> MobileNumber;
+    string MobileNumber;
+    while(true){
+        cout << "Please enter your mobile number: ";
+        cin >> MobileNumber;
+        if(MobileNumber.length()==10) break;
+        else{
+            cout<<"\n! INVALID MOBILE NUMBER !\n";
+            cout<<"! PLEASE ENTER A 10 DIGIT MOBILE NUMBER\n\n";
+        }
+    }
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
 
     string Address;
@@ -148,6 +159,7 @@ void User::giveFeedback()
 // Member functions of Online Shopping Management System
 void ShoppingManagementSystem::displayProducts()
 {
+    cout<<"\n-------------------- PRODUCTS IN OUR PLATFORM --------------------"<<endl;
     cout << "\n\nTotal number of products available in " << name << ": " << prod.size() << endl
          << endl;
     for (int i = 0; i < prod.size(); ++i)
@@ -162,7 +174,8 @@ void ShoppingManagementSystem::displayProducts()
 
 void ShoppingManagementSystem::displayUsersfeedback()
 {
-    cout << "Total number of users available in " << name << ": " << Users.size() << endl;
+    cout<<"\n-------------------- USERS FEEDBACK --------------------"<<endl;
+    cout << "\nTotal number of users available in " << name << ": " << Users.size() << endl;
     cout << endl;
     for (int i = 0; i < Users.size(); ++i)
     {
@@ -179,10 +192,11 @@ void ShoppingManagementSystem::displayUsersfeedback()
 void ShoppingManagementSystem::front_page()
 {
     cout << endl;
-    cout << "\nLogin Page:-\n"
-         << endl;
+    cout<<"---------------- Login Page ------------------"<<endl;
+    cout<<endl;
     cout << "1. Login" << endl;
     cout << "2. SignUp" << endl;
+    cout << "3. Quit" << endl;
     cout << "\n\nChoose any one option to start with " << name << ": ";
     int choice;
     cin >> choice;
@@ -196,6 +210,9 @@ void ShoppingManagementSystem::front_page()
     case 2:
         signup();
         break;
+    case 3:
+        cout<<"Quit Done Successfully\n"<<endl;
+        exit(0);
     default:
         cout << "INVALID INPUT.OPEN THE PROGRAM AGAIN.\n"
              << endl;
@@ -208,22 +225,33 @@ void ShoppingManagementSystem::run()
 {
     while (true)
     {
-        displayMainMenu();
+        cout<<"\n-------------------- WELCOME TO EASYBUY SHOPPING PLATFORM --------------------\n";
+        cout<<"\n1. Press 1 to display Main Menu\n" ;
+        cout<<"2. Press 2 to Log Out \n";
+        int choice;
+        cout<<"\nPlease enter your choice: ";
+        cin>>choice;
+        if(choice == 1){
+            displayMainMenu();
+        }
+        else if(choice != 2){
+            cout<<"! Invalid Choice Entered !\nTry Again";
+        }
+        else front_page();
     }
+
 }
 
 void ShoppingManagementSystem::displayMainMenu()
 {
     int choice;
-    cout << "\n\n--------------------Main Menu:--------------------\n\n";
+    cout << "\n\n-------------------- Main Menu --------------------\n\n";
     cout << "1. View Products\n";
     cout << "2. View Cart\n";
     cout << "3. View User Feedback\n";
     cout << "4. Quit\n\n\n";
     cout << "Enter your choice: ";
     cin >> choice;
-    cout << endl
-         << endl;
     switch (choice)
     {
 
@@ -238,7 +266,7 @@ void ShoppingManagementSystem::displayMainMenu()
         displayUsersfeedback();
         break;
     case 4:
-        cout << "GOOD TIME WITH YOU.SEE YOU SOON!\n"
+        cout << "\nGOOD TIME WITH YOU.SEE YOU SOON!\n"
              << endl;
         exit(0);
     default:
@@ -359,7 +387,6 @@ void ShoppingManagementSystem::handleProductSelection()
     if (user_quantity > 0 && user_quantity <= selectedVariety.quantity)
     {
         addToCart(selectedVariety, selectedBrand, selectedItem, selectedProduct, user_quantity);
-        selectedVariety.quantity = selectedVariety.quantity - user_quantity;
     }
     else if (user_quantity > selectedVariety.quantity)
     {
@@ -409,6 +436,8 @@ void ShoppingManagementSystem::generateBill()
 
 void ShoppingManagementSystem::show_cart()
 {
+    cout<<"\n--------------------WELCOME TO THE CART--------------------"<<endl;
+    cout<<endl;
     if (cart.empty())
     {
         cout << "CART IS EMPTY." << endl;

@@ -69,9 +69,9 @@ int main()
     I6.addBrandInExisItem(B12);
     Product P3("Stationery", 3, I5);
     P3.addItemInExisProduct(I6);
-    User U1("Yatharth Kumar Saxena", 7310989810, "Neev karori dham colony , Agra Rd , Aligarh", "yatharthsaxena91@gmail.com", "Great Platform");
-    User U2("Navneet Varshney", 9897672310, "Jaigang Sansni Gate , Aligarh", "navneet23@gmail.com", "Nice and user friendly interface");
-    User U3("Siddhant Sharma", 9728916542, "Tiger Log , Numaish Road , Aligarh", "siddhant345@hotmail.com", "Good service and products");
+    User U1("Yatharth Kumar Saxena", "7310989810", "Neev karori dham colony , Agra Rd , Aligarh", "yatharthsaxena91@gmail.com", "Great Platform");
+    User U2("Navneet Varshney", "9897672310", "Jaigang Sansni Gate , Aligarh", "navneet23@gmail.com", "Nice and user friendly interface");
+    User U3("Siddhant Sharma", "9728916542", "Tiger Log , Numaish Road , Aligarh", "siddhant345@hotmail.com", "Good service and products");
 
     // sms.displayUsers();
     // sms.displayProducts();
