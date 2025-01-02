@@ -225,23 +225,9 @@ void ShoppingManagementSystem::run()
 {
     while (true)
     {
-        cout<<"\n-------------------- WELCOME TO EASYBUY SHOPPING PLATFORM --------------------\n";
-        cout<<"\n1. Press 1 to display Main Menu\n" ;
-        cout<<"2. Press 2 to Log Out \n";
-        int choice;
-        cout<<"\nPlease enter your choice: ";
-        cin>>choice;
-        if(choice == 1){
-            displayMainMenu();
-        }
-        else if(choice != 2){
-            cout<<"! Invalid Choice Entered !\nTry Again";
-        }
-        else front_page();
-    }
-
+        displayMainMenu();
 }
-
+}
 void ShoppingManagementSystem::displayMainMenu()
 {
     int choice;
@@ -249,7 +235,8 @@ void ShoppingManagementSystem::displayMainMenu()
     cout << "1. View Products\n";
     cout << "2. View Cart\n";
     cout << "3. View User Feedback\n";
-    cout << "4. Quit\n\n\n";
+    cout<<"4. Log out\n";
+    cout << "5. Quit\n\n\n";
     cout << "Enter your choice: ";
     cin >> choice;
     switch (choice)
@@ -266,8 +253,13 @@ void ShoppingManagementSystem::displayMainMenu()
         displayUsersfeedback();
         break;
     case 4:
-        cout << "\nGOOD TIME WITH YOU.SEE YOU SOON!\n"
-             << endl;
+        Users[login_userID - 1].giveFeedback();
+        delete_cart();
+        front_page();
+        break;
+    case 5:
+        Users[login_userID - 1].giveFeedback();
+        cout << "\nGOOD TIME WITH YOU.SEE YOU SOON!\n"<< endl;
         exit(0);
     default:
         cout << "Invalid choice, please try again.\n";
