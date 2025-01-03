@@ -27,7 +27,7 @@ This project provides a deep dive into the following aspects:
 ## 📂 **Folder Structure**
 The project consists of **4 files**, each playing a vital role in the system's functionality:
 
-1. 📄 **class.cpp**
+1. 📄 **ShoppingManagementSystem.cpp**
     - **Purpose**: Contains class declarations and function prototypes.
     - **Highlights**:
         - Defines classes like `Variety`, `Brand`, `Item`, `Product`, `User`, and `OnlineShoppingManagementSystem`.
@@ -39,7 +39,7 @@ The project consists of **4 files**, each playing a vital role in the system's f
         - Uses the scope resolution operator (`::`) to define class functions.
         - Manages product interactions, user feedback, and inventory updates.
 
-3. 📄 **MainProgram.cpp**
+3. 📄 **mainProgram.cpp**
     - **Purpose**: Serves as the program's entry point, orchestrating its workflow.
     - **Highlights**:
         - Initializes objects for products, brands, and users.
@@ -77,6 +77,7 @@ The project consists of **4 files**, each playing a vital role in the system's f
 This project incorporates the following core programming concepts:
 
 1. **Object-Oriented Programming**:
+    - Data Abstraction and Different Types of Inheritance are used
     - Encapsulation of data in classes and objects.
     - Real-world modeling of online shopping systems.
 
@@ -94,11 +95,11 @@ This project incorporates the following core programming concepts:
 
 ## ⚙️ **How It Works**
 ### Step-by-Step Workflow:
-1. **Class Declaration (`class.cpp`)**:
+1. **Class Declaration (`ShoppingManagementSystem.cpp`)**:
     - Defines the blueprint for products, brands, and users.
 2. **Function Implementation (`FunctionsOfOSMS.cpp`)**:
     - Implements logic for product interactions and user feedback.
-3. **Main Execution (`MainProgram.cpp`)**:
+3. **Main Execution (`mainProgram.cpp`)**:
     - Creates objects, initializes the system, and triggers user interaction.
 
 ---
@@ -144,7 +145,7 @@ This project was developed by a dedicated team of three members. Here's a breakd
       ```bash  
       g++ -o OnlineShoppingManagementSystem MainProgram.cpp FunctionsOfOSMS.cpp class.cpp  
       ```  
-    - Run the `MainProgram.cpp` file to execute the program:
+    - Run the `mainProgram.cpp` file to execute the program:
       ```bash  
       ./OnlineShoppingManagementSystem  
       ```  
