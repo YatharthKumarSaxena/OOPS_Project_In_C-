@@ -235,7 +235,7 @@ void ShoppingManagementSystem::displayMainMenu()
     cout << "1. View Products\n";
     cout << "2. View Cart\n";
     cout << "3. View User Feedback\n";
-    cout<<"4. Log out\n";
+    cout<<"4.Log out\n";
     cout << "5. Quit\n\n\n";
     cout << "Enter your choice: ";
     cin >> choice;
